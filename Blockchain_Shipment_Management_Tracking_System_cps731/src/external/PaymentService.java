@@ -1,5 +1,7 @@
 package external;
 
+import model.Document;
+
 public class PaymentService {
 
     public int transactionID; 
@@ -26,13 +28,13 @@ public class PaymentService {
         this.status = "Auto-Payment Triggered";
     }
 
-    // public Document generateReciept(int transactionID) {
-    //     // Simulate receipt generation logic
-    //     this.transactionID = transactionID;
-    //     Document receipt = new Document();
-    //     receipt.content = "Receipt for Transaction ID: " + transactionID + ", Amount: " + this.amount + ", Status: " + this.status;
-    //     return receipt;
-    // }
+    public Document generateReciept(int transactionID) {
+        // Simulate receipt generation logic
+        this.transactionID = transactionID;
+        Document receipt = new Document();
+        // receipt.content = "Receipt for Transaction ID: " + transactionID + ", Amount: " + this.amount + ", Status: " + this.status;
+        return receipt;
+    }
 
     public int getTransactionID() {
         return transactionID;

@@ -1,7 +1,8 @@
 package gateway;
 
 import external.OffChainStorage;
-import javax.swing.text.Document;
+import model.Document;
+
 
 public class OffChainStorageAdapter {
 
@@ -13,13 +14,13 @@ public class OffChainStorageAdapter {
         return false;
     }
 
-    // public String uploadFile(Document document) { 
-    //     return;
-    // }
+    public String uploadFile(Document document) { 
+        return null;
+    }
 
-    // public Document retrieveFile(String hash) {
-    //     return null;
-    // }
+    public Document retrieveFile(String hash) {
+        return null;
+    }
 
     public boolean verifyIntegrity (Document document) {
         return false;

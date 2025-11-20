@@ -2,12 +2,12 @@ package external;
 
 import java.util.List;
 
-// import javax.swing.text.Document;
+import model.Document;
 
 public class OffChainStorage {
 
     public boolean avaliable;
-    // public List <Document> documents; 
+    public List <Document> documents; 
 
     public boolean isAvaliable() {
         return avaliable;
@@ -17,13 +17,13 @@ public class OffChainStorage {
         this.avaliable = avaliable;
     }
 
-    // public List<Document> getDocuments() {
-    //     return documents;
-    // }
+    public List<Document> getDocuments() {
+        return documents;
+    }
 
-    // public void setDocuments(List<Document> documents) {
-    //     this.documents = documents;
-    // }
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
     
     
 }
