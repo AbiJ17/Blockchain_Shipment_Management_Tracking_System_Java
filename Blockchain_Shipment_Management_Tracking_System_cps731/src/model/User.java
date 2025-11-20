@@ -12,8 +12,13 @@ public class User {
         return false; 
     }
 
-    public void logout() {}
-    public void viewDashboard() {}
+    public void logout() {
+
+    }
+    
+    public void viewDashboard() {
+
+    }
 
     public boolean authenticate(String inputPassword) { 
         return false; 
