@@ -1,52 +1,32 @@
 package model;
 
-import java.util.*;
-
 public class Document {
 
-    public int documentID;
-    public String name;
-    public String hashValue;
-    public String filePath; 
-    public Date timestamp;
-    
-    public String generateHash() {
-        return "";
-    }
-    
-    public boolean verifyHash() {
-        return false;
+    private final String documentId;
+    private final String shipmentId;
+    private final String name;
+    private final String content; // for demo
+
+    public Document(String documentId, String shipmentId, String name, String content) {
+        this.documentId = documentId;
+        this.shipmentId = shipmentId;
+        this.name = name;
+        this.content = content;
     }
 
-    public int getDocumentID() {
-        return documentID;
+    public String getDocumentId() {
+        return documentId;
     }
-    public void setDocumentID(int documentID) {
-        this.documentID = documentID;
+
+    public String getShipmentId() {
+        return shipmentId;
     }
+
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public String getContent() {
+        return content;
     }
-    public String getHashValue() {
-        return hashValue;
-    }
-    public void setHashValue(String hashValue) {
-        this.hashValue = hashValue;
-    }
-    public String getFilePath() {
-        return filePath;
-    }
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-    public Date getTimestamp() {
-        return timestamp;
-    }
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    } 
-    
 }

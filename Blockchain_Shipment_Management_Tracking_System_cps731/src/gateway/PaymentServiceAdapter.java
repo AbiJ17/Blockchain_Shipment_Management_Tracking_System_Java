@@ -1,28 +1,20 @@
 package gateway;
 
 import external.PaymentService;
+import model.Shipment;
 
+/**
+ * Adapter around the external PaymentService.
+ */
 public class PaymentServiceAdapter {
-    
-    public boolean connected;
-    public int lastTransactionID;
-    public PaymentService paymentService;
 
-    public boolean connect() {
-        return false;
+    private final PaymentService paymentService;
+
+    public PaymentServiceAdapter(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
-    public boolean triggerPayment(String policyID) { 
-        return false;
+    public void processPayment(Shipment shipment) {
+        paymentService.processPayment(shipment);
     }
-
-    public void recordTransaction(int txID) {
-        
-    }
-
-    public void disconnect() {
-
-    }
-    
-    
 }

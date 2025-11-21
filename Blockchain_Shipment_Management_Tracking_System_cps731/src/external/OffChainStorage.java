@@ -1,29 +1,30 @@
 package external;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import model.Document;
-
+/**
+ * Simulated off-chain storage for documents.
+ * Stores document content keyed by a document ID.
+ */
 public class OffChainStorage {
 
-    public boolean avaliable;
-    public List <Document> documents; 
+    private final Map<String, String> storage = new HashMap<>();
 
-    public boolean isAvaliable() {
-        return avaliable;
+    public boolean storeDocument(String documentId, String content) {
+        if (documentId == null || content == null) {
+            return false;
+        }
+        storage.put(documentId, content);
+        System.out.println("[OffChainStorage] Stored document " + documentId);
+        return true;
     }
 
-    public void setAvaliable(boolean avaliable) {
-        this.avaliable = avaliable;
+    public String fetchDocument(String documentId) {
+        return storage.get(documentId);
     }
 
-    public List<Document> getDocuments() {
-        return documents;
+    public boolean documentExists(String documentId) {
+        return storage.containsKey(documentId);
     }
-
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-    
-    
 }

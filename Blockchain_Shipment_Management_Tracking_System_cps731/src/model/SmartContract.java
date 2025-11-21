@@ -1,51 +1,20 @@
 package model;
 
-import java.util.List;
-
 public class SmartContract {
 
-    public int contractID; 
-    public String contractType; 
-    public List<String> rules; 
+    // Simple rules to show "contract" behaviour
 
-    public boolean validateShipment(Shipment shipment) {
-        return false;
+    // Example rule: once DELIVERED, cannot move back to another state
+    public boolean canUpdateStatus(Shipment shipment, ShipmentStatus newStatus) {
+        if (shipment.getStatus() == ShipmentStatus.DELIVERED &&
+                newStatus != ShipmentStatus.DELIVERED) {
+            return false;
+        }
+        return true;
     }
 
-    public void enforceDeliveryConfirmation() { 
-
+    // Example rule: payment is allowed only when shipment is delivered
+    public boolean canTriggerPayment(Shipment shipment) {
+        return shipment.getStatus() == ShipmentStatus.DELIVERED;
     }
-
-    public void triggerInsuranceClaim() { 
-
-    }
-
-    public boolean enforceRolePermissions(User user) {
-        return false;
-    }
-
-    public int getContractID() {
-        return contractID;
-    }
-
-    public void setContractID(int contractID) {
-        this.contractID = contractID;
-    }
-
-    public String getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
-    }
-
-    public List<String> getRules() {
-        return rules;
-    }
-
-    public void setRules(List<String> rules) {
-        this.rules = rules;
-    }
-    
 }

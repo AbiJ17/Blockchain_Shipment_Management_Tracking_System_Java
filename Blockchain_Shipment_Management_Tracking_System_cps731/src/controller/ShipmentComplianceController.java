@@ -1,58 +1,35 @@
 package controller;
 
-import external.BlockchainNetwork;
+import gateway.BlockchainNetworkGateway;
+import model.Event;
+import model.Report;
 
 import java.util.List;
-import model.Auditor;
-import model.CustomsOfficer;
+import java.util.stream.Collectors;
 
+/**
+ * Controller responsible for compliance / audit-related actions.
+ */
 public class ShipmentComplianceController {
 
-    public BlockchainNetwork blockchain;
-    // public SmartContract smartContract;
-    public Auditor auditor;
-    public CustomsOfficer customsOfficer;
-    // public List<Document> documents;
+    private final BlockchainNetworkGateway blockchainGateway;
 
-    public BlockchainNetwork getBlockchain() {
-        return blockchain;
+    public ShipmentComplianceController(BlockchainNetworkGateway blockchainGateway) {
+        this.blockchainGateway = blockchainGateway;
     }
 
-    public void setBlockchain(BlockchainNetwork blockchain) {
-        this.blockchain = blockchain;
+    public Report generateAuditTrail(String shipmentId) {
+        List<Event> events = blockchainGateway.getEvents(shipmentId);
+
+        if (events.isEmpty()) {
+            return new Report("Audit Trail for " + shipmentId,
+                    "No events found for this shipment.");
+        }
+
+        String body = events.stream()
+                .map(e -> e.getTimestamp() + " | " + e.getStatus() + " | " + e.getDescription())
+                .collect(Collectors.joining("\n"));
+
+        return new Report("Audit Trail for " + shipmentId, body);
     }
-    
-    // public SmartContract getSmartContract() {
-    //     return smartContract;
-    // }
-
-    // public void setSmartContract(SmartContract smartContract) {
-    //     this.smartContract = smartContract;
-    // }
-
-    public Auditor getAuditor() {
-        return auditor;
-    }
-
-    public void setAuditor(Auditor auditor) {
-        this.auditor = auditor;
-    }
-
-    public CustomsOfficer getCustomsOfficer() {
-        return customsOfficer;
-    }
-
-    public void setCustomsOfficer(CustomsOfficer customsOfficer) {
-        this.customsOfficer = customsOfficer;
-    }
-
-    // public List<Document> getDocuments() {
-    //     return documents;
-    // }
-
-    // public void setDocuments(List<Document> documents) {
-    //     this.documents = documents;
-    // }
-    
-    
 }

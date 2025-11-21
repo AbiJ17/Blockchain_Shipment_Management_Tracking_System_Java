@@ -1,32 +1,42 @@
 package gateway;
 
 import external.BlockchainNetwork;
+import model.Event;
+import model.Shipment;
 
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Gateway that the application uses to talk to the BlockchainNetwork.
+ * This is your GRASP Indirection layer.
+ */
 public class BlockchainNetworkGateway {
 
-    public boolean connected;
-    public int lastTransactionID;
-    public BlockchainNetwork blockchain; 
+    private final BlockchainNetwork blockchainNetwork;
 
-
-    public boolean connect() {
-        return false;
+    public BlockchainNetworkGateway(BlockchainNetwork blockchainNetwork) {
+        this.blockchainNetwork = blockchainNetwork;
     }
 
-    public boolean sendTransaction(String data) {
-        return false;
+    public String writeShipment(Shipment shipment) {
+        blockchainNetwork.storeShipment(shipment);
+        return shipment.getShipmentId();
     }
 
-    public String queryLedger(int txID) { 
-        return null;
+    public void recordEvent(Event event) {
+        blockchainNetwork.storeEvent(event);
     }
 
-    public boolean validateBlock(String hash) { 
-        return false;
+    public Shipment getShipment(String shipmentId) {
+        return blockchainNetwork.findShipmentById(shipmentId);
     }
 
-    public void disconnect() {
-
+    public List<Event> getEvents(String shipmentId) {
+        return blockchainNetwork.findEventsByShipmentId(shipmentId);
     }
-    
+
+    public Map<String, Shipment> getAllShipments() {
+        return blockchainNetwork.getAllShipments();
+    }
 }

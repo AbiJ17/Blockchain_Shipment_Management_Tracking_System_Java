@@ -3,31 +3,26 @@ package gateway;
 import external.OffChainStorage;
 import model.Document;
 
-
+/**
+ * Adapter between our domain Document and the external OffChainStorage.
+ */
 public class OffChainStorageAdapter {
 
-    public boolean connected;
-    public int lastTransactionID;
-    public OffChainStorage offChainStorage;
+    private final OffChainStorage storage;
 
-    public boolean connect() {
-        return false;
+    public OffChainStorageAdapter(OffChainStorage storage) {
+        this.storage = storage;
     }
 
-    public String uploadFile(Document document) { 
-        return null;
+    public void saveDocument(Document document) {
+        storage.storeDocument(document.getDocumentId(), document.getContent());
     }
 
-    public Document retrieveFile(String hash) {
-        return null;
+    public String loadDocumentContent(String documentId) {
+        return storage.fetchDocument(documentId);
     }
 
-    public boolean verifyIntegrity (Document document) {
-        return false;
+    public boolean documentExists(String documentId) {
+        return storage.documentExists(documentId);
     }
-
-    public void disconnect() {
-
-    }
-    
 }

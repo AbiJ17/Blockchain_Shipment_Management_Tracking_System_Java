@@ -1,99 +1,73 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import org.w3c.dom.events.Event;
 
 public class Shipment {
 
-    public int shipmentID; 
-    public String origin;
-    public String destination;
-    public String status;
-    public Date dispatchDate;
-    public Date deliveryDate;
-    public String assignedLogistics; 
-    public String assignedWarehouse; 
-    public List<Document> documents;
-    public SmartContract smartContract;
-    
-    public void updateStatus(String newStatus) {
-        this.status = newStatus;
+    private final String shipmentId;
+    private String origin;
+    private String destination;
+    private String description;
+    private ShipmentStatus status;
+    private final LocalDateTime createdAt;
+    private final List<Event> events = new ArrayList<>();
+
+    public Shipment(String shipmentId, String origin, String destination, String description) {
+        this.shipmentId = shipmentId;
+        this.origin = origin;
+        this.destination = destination;
+        this.description = description;
+        this.status = ShipmentStatus.CREATED;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public void addDocument(Document document) {
-        this.documents.add(document);
+    public String getShipmentId() {
+        return shipmentId;
     }
 
-    public List<Event> getShipmentHistory() {
-        
-        return null;
-    }
-    
-    public void confirmDelivery() {
-        
-    }
-
-    public int getShipmentID() {
-        return shipmentID;
-    }
-    public void setShipmentID(int shipmentID) {
-        this.shipmentID = shipmentID;
-    }
     public String getOrigin() {
         return origin;
     }
+
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+
     public String getDestination() {
         return destination;
     }
+
     public void setDestination(String destination) {
         this.destination = destination;
     }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public Date getDispatchDate() {
-        return dispatchDate;
-    }
-    public void setDispatchDate(Date dispatchDate) {
-        this.dispatchDate = dispatchDate;
-    }
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
-    public String getAssignedLogistics() {
-        return assignedLogistics;
-    }
-    public void setAssignedLogistics(String assignedLogistics) {
-        this.assignedLogistics = assignedLogistics;
-    }
-    public String getAssignedWarehouse() {
-        return assignedWarehouse;
-    }
-    public void setAssignedWarehouse(String assignedWarehouse) {
-        this.assignedWarehouse = assignedWarehouse;
-    }
-    public List<Document> getDocuments() {
-        return documents;
-    }
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-    public SmartContract getSmartContract() {
-        return smartContract;
-    }
-    public void setSmartContract(SmartContract smartContract) {
-        this.smartContract = smartContract;
+
+    public String getDescription() {
+        return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ShipmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ShipmentStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void addEvent(Event event) {
+        this.events.add(event);
+    }
 }
