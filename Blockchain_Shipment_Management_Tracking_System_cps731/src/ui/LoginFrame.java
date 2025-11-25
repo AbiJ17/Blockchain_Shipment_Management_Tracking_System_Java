@@ -7,7 +7,9 @@ import external.OffChainStorage;
 import gateway.BlockchainNetworkGateway;
 import gateway.OffChainStorageAdapter;
 import model.*;
+
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +57,13 @@ public class LoginFrame extends JFrame {
                 smartContract);
 
         seedDemoUsers();
-        demoUsersStaticRef = demoUsers; 
+        demoUsersStaticRef = demoUsers;
 
         // ---------- Look & feel ----------
         setTitle("Blockchain Shipment Tracking – Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(520, 360);
+        // a bit wider / taller so everything fits nicely
+        setSize(780, 460);
         setLocationRelativeTo(null);
         setResizable(false);
 
@@ -75,35 +78,38 @@ public class LoginFrame extends JFrame {
 
         JPanel cardPanel = new JPanel();
         cardPanel.setBackground(card);
-        cardPanel.setBorder(BorderFactory.createEmptyBorder(24, 32, 24, 32));
+        cardPanel.setBorder(BorderFactory.createEmptyBorder(32, 40, 32, 40));
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
-        cardPanel.setPreferredSize(new Dimension(420, 260));
+        cardPanel.setPreferredSize(new Dimension(640, 320));
 
         JLabel title = new JLabel("Blockchain Console Login");
         title.setForeground(text);
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 22f));
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel subtitle = new JLabel("Enter your username and password to access the ledger.");
+        // use HTML so the subtitle wraps instead of cutting off
+        JLabel subtitle = new JLabel(
+                "<html>Enter your username and password to access the ledger.</html>");
         subtitle.setForeground(new Color(160, 170, 210));
         subtitle.setFont(subtitle.getFont().deriveFont(13f));
+        subtitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JPanel titleWrap = new JPanel();
         titleWrap.setBackground(card);
         titleWrap.setLayout(new BoxLayout(titleWrap, BoxLayout.Y_AXIS));
+        titleWrap.setAlignmentX(Component.LEFT_ALIGNMENT);
         titleWrap.add(title);
-        titleWrap.add(Box.createVerticalStrut(4));
+        titleWrap.add(Box.createVerticalStrut(6));
         titleWrap.add(subtitle);
 
         // ---------- Form ----------
-        JLabel userLabel = new JLabel("Username");
-        userLabel.setForeground(text);
         usernameField = new JTextField(18);
-        styleTextField(usernameField, card, text);
-
-        JLabel passLabel = new JLabel("Password");
-        passLabel.setForeground(text);
         passwordField = new JPasswordField(18);
+        styleTextField(usernameField, card, text);
         styleTextField(passwordField, card, text);
+
+        JPanel userRow = createFormRow("Username", usernameField, text);
+        JPanel passRow = createFormRow("Password", passwordField, text);
 
         JButton loginButton = createPrimaryButton("Log in", accent);
         JButton exitButton = createSecondaryButton("Exit");
@@ -115,31 +121,49 @@ public class LoginFrame extends JFrame {
             System.exit(0);
         });
 
-        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT, 16, 0));
         buttonRow.setOpaque(false);
+        buttonRow.setAlignmentX(Component.LEFT_ALIGNMENT);
         buttonRow.add(exitButton);
         buttonRow.add(loginButton);
 
         statusLabel = new JLabel(" ");
         statusLabel.setForeground(new Color(252, 165, 165));
+        statusLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         cardPanel.add(titleWrap);
-        cardPanel.add(Box.createVerticalStrut(18));
-        cardPanel.add(userLabel);
-        cardPanel.add(Box.createVerticalStrut(4));
-        cardPanel.add(usernameField);
-        cardPanel.add(Box.createVerticalStrut(12));
-        cardPanel.add(passLabel);
-        cardPanel.add(Box.createVerticalStrut(4));
-        cardPanel.add(passwordField);
-        cardPanel.add(Box.createVerticalStrut(18));
+        cardPanel.add(Box.createVerticalStrut(24));
+        cardPanel.add(userRow);
+        cardPanel.add(Box.createVerticalStrut(14));
+        cardPanel.add(passRow);
+        cardPanel.add(Box.createVerticalStrut(24));
         cardPanel.add(buttonRow);
-        cardPanel.add(Box.createVerticalStrut(10));
+        cardPanel.add(Box.createVerticalStrut(14));
         cardPanel.add(statusLabel);
 
         root.add(cardPanel);
 
         setVisible(true);
+    }
+
+    private JPanel createFormRow(String labelText, JComponent field, Color textColor) {
+        JPanel row = new JPanel();
+        row.setOpaque(false);
+        row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+        row.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel label = new JLabel(labelText);
+        label.setForeground(textColor);
+        // fixed width so the fields line up nicely
+        label.setPreferredSize(new Dimension(90, 26));
+
+        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
+
+        row.add(label);
+        row.add(Box.createHorizontalStrut(16));
+        row.add(field);
+
+        return row;
     }
 
     private void styleTextField(JTextField field, Color bg, Color fg) {
@@ -148,7 +172,7 @@ public class LoginFrame extends JFrame {
         field.setCaretColor(fg);
         field.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(30, 64, 175)),
-                BorderFactory.createEmptyBorder(6, 8, 6, 8)));
+                BorderFactory.createEmptyBorder(6, 10, 6, 10)));
     }
 
     private JButton createPrimaryButton(String text, Color accent) {
@@ -156,19 +180,33 @@ public class LoginFrame extends JFrame {
         btn.setForeground(Color.WHITE);
         btn.setBackground(accent);
         btn.setFocusPainted(false);
-        btn.setBorder(BorderFactory.createEmptyBorder(8, 22, 8, 22));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btn.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(accent.brighter(), 1, true), // rounded rectangle
+                new InsetsEmptyBorder(8, 26, 8, 26)));
         return btn;
     }
 
     private JButton createSecondaryButton(String text) {
+        Color outline = new Color(55, 65, 81);
         JButton btn = new JButton(text);
         btn.setForeground(new Color(209, 213, 219));
         btn.setBackground(new Color(30, 41, 59));
         btn.setFocusPainted(false);
-        btn.setBorder(BorderFactory.createEmptyBorder(8, 18, 8, 18));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btn.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(outline, 1, true), // rounded rectangle
+                new InsetsEmptyBorder(8, 22, 8, 22)));
         return btn;
+    }
+
+    /**
+     * Simple EmptyBorder subclass so we can create it inline without long code.
+     */
+    private static class InsetsEmptyBorder extends javax.swing.border.EmptyBorder {
+        public InsetsEmptyBorder(int top, int left, int bottom, int right) {
+            super(top, left, bottom, right);
+        }
     }
 
     // ---------- Demo users ----------
@@ -280,17 +318,15 @@ public class LoginFrame extends JFrame {
 
         // Success – open the main console UI and close login
         User loggedIn = found;
-        SwingUtilities.invokeLater(() -> {
-            new MainUI(
-                    loggedIn,
-                    blockchainNetwork,
-                    blockchainGateway,
-                    offChainStorage,
-                    offChainAdapter,
-                    smartContract,
-                    lifecycleController,
-                    complianceController);
-        });
+        SwingUtilities.invokeLater(() -> new MainUI(
+                loggedIn,
+                blockchainNetwork,
+                blockchainGateway,
+                offChainStorage,
+                offChainAdapter,
+                smartContract,
+                lifecycleController,
+                complianceController));
         dispose();
     }
 
@@ -304,7 +340,8 @@ public class LoginFrame extends JFrame {
 
     /** Get a specific user by username */
     public static User getUserStatic(String username) {
-        if (demoUsersStaticRef == null) return null;
+        if (demoUsersStaticRef == null)
+            return null;
         for (User u : demoUsersStaticRef) {
             if (u.getUsername().equalsIgnoreCase(username)) {
                 return u;
@@ -315,8 +352,8 @@ public class LoginFrame extends JFrame {
 
     /** Delete a user from the static list */
     public static void deleteUserStatic(String username) {
-        if (demoUsersStaticRef == null) return;
+        if (demoUsersStaticRef == null)
+            return;
         demoUsersStaticRef.removeIf(u -> u.getUsername().equalsIgnoreCase(username));
     }
-
 }
