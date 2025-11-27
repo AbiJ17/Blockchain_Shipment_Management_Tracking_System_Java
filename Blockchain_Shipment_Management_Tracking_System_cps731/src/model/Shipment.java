@@ -12,7 +12,8 @@ public class Shipment {
     private String description;
     private String status;
     private Date dispatchDate;
-    private Date deliveryDate;
+    private Date actDeliveryDate;
+    private Date expDeliveryDate;
 
     private final List<Document> documents = new ArrayList<>();
     private final List<Event> history = new ArrayList<>();
@@ -78,12 +79,21 @@ public class Shipment {
         this.dispatchDate = dispatchDate;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getExpectedDeliveryDate() {
+        return expDeliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setExpectedDeliveryDate(Date expDeliveryDate) {
+        this.expDeliveryDate = expDeliveryDate;
+    }
+
+
+    public Date getActualDeliveryDate() {
+        return actDeliveryDate;
+    }
+
+    public void setActualDeliveryDate(Date actDeliveryDate) {
+        this.actDeliveryDate = actDeliveryDate;
     }
 
     public List<Document> getDocuments() {
@@ -108,7 +118,7 @@ public class Shipment {
 
     public void confirmDelivery() {
         this.status = "DELIVERED";
-        this.deliveryDate = new Date();
+        this.actDeliveryDate = new Date();
         addHistoryEvent("Shipment marked as DELIVERED");
     }
 }

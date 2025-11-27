@@ -1,9 +1,26 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class SmartContract {
+
+    private int contractID;
+    private String contractType;
+    private List<String> rules = new ArrayList<>();
+
+    // ----- Constructors -----
+    public SmartContract() {
+    }
+
+    public SmartContract(int contractID, String contractType, List<String> rules) {
+        this.contractID = contractID;
+        this.contractType = contractType;
+        if (rules != null) {
+            this.rules = rules;
+        }
+    }
 
     /**
      * Business rule for status updates.
@@ -25,7 +42,7 @@ public class SmartContract {
         return true;
     }
 
-    /** Example rule: payment only allowed when status is DELIVERED. */
+    /** Rule: payment only allowed when status is DELIVERED. */
     public boolean canTriggerPayment(Shipment shipment) {
         if (shipment == null)
             return false;
@@ -109,6 +126,65 @@ public class SmartContract {
         return allowedForApproval;
     }
 
+    /**
+     * Automatic Insurance Claim Rule:
+     * A claim is triggered automatically when:
+     * - Shipment is DAMAGED, or
+     * - Delivery is delayed (delivery timestamp > expected), or
+     * - Shipment is NOT DELIVERED by a deadline.
+     */
+    public boolean triggerInsuranceClaim(Shipment shipment) {
 
+        if (shipment == null)
+            return false;
+
+        String status = shipment.getStatus().toUpperCase();
+
+        // Condition 1: Damage detected
+        if (status.equals("DAMAGED")) {
+            return true;
+        }
+
+        // Condition 2: Delayed delivery
+        else if (shipment.getExpectedDeliveryDate() != null &&
+            shipment.getActualDeliveryDate() != null &&
+            shipment.getActualDeliveryDate().after(shipment.getExpectedDeliveryDate())) {
+            return true;
+        }
+
+        // Condition 3: Non-delivery by deadline
+        else if (shipment.getExpectedDeliveryDate() != null &&
+            shipment.getActualDeliveryDate() == null &&
+            new Date().after(shipment.getExpectedDeliveryDate())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // ----- Getters/Setters -----
+    public int getContractID() {
+        return contractID;
+    }
+
+    public void setContractID(int contractID) {
+        this.contractID = contractID;
+    }
+
+    public String getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
+    }
+
+    public List<String> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<String> rules) {
+        this.rules = rules;
+    }
 
 }
