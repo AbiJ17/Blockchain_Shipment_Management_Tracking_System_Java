@@ -23,11 +23,6 @@ public class CustomsOfficer extends User {
 
     // ---- Domain behaviour ----
 
-    public boolean verifyDocuments(Document document) {
-        // Stub – would call compliance controller in a full system
-        return document != null;
-    }
-
     public void recordClearanceDecision(Shipment shipment, String status) {
         if (shipment == null)
             return;

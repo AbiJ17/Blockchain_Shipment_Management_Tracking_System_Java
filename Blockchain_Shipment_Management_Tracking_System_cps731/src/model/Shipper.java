@@ -35,16 +35,10 @@ public class Shipper extends User {
         return shipment;
     }
 
-    public void uploadDocument(Document document) {
-    }
-
     public void updateShipmentStatus(Shipment shipment, String newStatus) {
         if (shipment != null) {
             shipment.setStatus(newStatus);
         }
-    }
-
-    public void assignLogisticsProvider(LogisticsProvider provider) {
     }
 
     // GETTERS/SETTERS

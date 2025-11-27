@@ -40,16 +40,6 @@ public class Administrator extends User {
         }
     }
 
-    public boolean validateCredentials(String username, String password) {
-        // In this mini-project, LoginFrame already handles this.
-        // This method is just to satisfy the class diagram.
-        return username != null && password != null;
-    }
-
-    public void monitorSystem() {
-        // Stub – could be hooked to logs / metrics.
-    }
-
     // ---- Getters / setters ----
 
     public int getAdminID() {

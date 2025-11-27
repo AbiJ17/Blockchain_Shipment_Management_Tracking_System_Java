@@ -8,9 +8,14 @@ public class User {
     private String role;
     private String email;
 
-    // 🔹 NEW: no-arg constructor (needed by Shipper(), Buyer(), etc.)
+    // No argument constructor (needed by Shipper(), Buyer(), etc.)
     public User() {
-        // you can leave this empty or set sensible defaults
+        // defaults
+        this.userID = -1;
+        this.username = "";
+        this.password = "";
+        this.role = "";
+        this.email = ""; 
     }
 
     // Existing full constructor used by subclasses and login seed
@@ -71,18 +76,4 @@ public class User {
     public boolean authenticate(String inputPassword) {
         return password != null && password.equals(inputPassword);
     }
-
-    public boolean authorize(String action) {
-        // keep simple; you can refine if needed
-        return true;
-    }
-
-    public void login() {
-        /* stub */ }
-
-    public void logout() {
-        /* stub */ }
-
-    public void viewDashboard() {
-        /* stub */ }
 }

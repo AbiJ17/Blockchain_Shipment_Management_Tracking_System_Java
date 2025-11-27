@@ -34,11 +34,6 @@ public class Auditor extends User {
         return r;
     }
 
-    public boolean verifyRecords() {
-        // Stub: always true
-        return true;
-    }
-
     // ---- Getters / setters ----
 
     public int getAuditID() {

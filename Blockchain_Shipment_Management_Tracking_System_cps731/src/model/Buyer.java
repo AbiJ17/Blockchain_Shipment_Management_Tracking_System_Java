@@ -23,11 +23,6 @@ public class Buyer extends User {
 
     // ---- Domain behaviour ----
 
-    public Shipment trackShipment(Shipment shipment) {
-        // Caller usually already has Shipment; this method is just a stub.
-        return shipment;
-    }
-
     public void confirmDelivery(Shipment shipment) {
         if (shipment == null)
             return;
@@ -39,11 +34,6 @@ public class Buyer extends User {
         if (shipment == null)
             return;
         shipment.addHistoryEvent("Dispute raised by buyer: " + reason);
-    }
-
-    public boolean verifyDocument(Document document) {
-        // Real verification handled by controllers / adapters.
-        return document != null;
     }
 
     // ---- Getters / setters ----
