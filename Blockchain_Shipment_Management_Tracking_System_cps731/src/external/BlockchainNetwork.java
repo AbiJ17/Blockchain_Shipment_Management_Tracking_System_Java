@@ -54,18 +54,7 @@ public class BlockchainNetwork {
     }
 
     /**
-     * Old helper used earlier: read a single ledger entry by index.
-     * Kept for compatibility.
-     */
-    public String queryLedger(int index) {
-        if (index < 0 || index >= ledger.size()) {
-            return null;
-        }
-        return ledger.get(index);
-    }
-
-    /**
-     * New helper used by the gateway / controllers:
+     * Helper used by the gateway / controllers:
      * return all ledger entries that contain the given shipmentId.
      */
     public List<String> queryLedger(String shipmentId) {
