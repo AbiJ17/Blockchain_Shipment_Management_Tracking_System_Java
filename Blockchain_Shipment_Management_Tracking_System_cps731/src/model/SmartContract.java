@@ -7,8 +7,7 @@ import java.util.List;
 public class SmartContract {
 
     private int contractID;
-    private String contractType;
-    private List<String> rules = new ArrayList<>();
+    private String contractType; 
 
     // ----- Constructors -----
     public SmartContract() {
@@ -17,9 +16,6 @@ public class SmartContract {
     public SmartContract(int contractID, String contractType, List<String> rules) {
         this.contractID = contractID;
         this.contractType = contractType;
-        if (rules != null) {
-            this.rules = rules;
-        }
     }
 
     /**
@@ -176,14 +172,6 @@ public class SmartContract {
 
     public void setContractType(String contractType) {
         this.contractType = contractType;
-    }
-
-    public List<String> getRules() {
-        return rules;
-    }
-
-    public void setRules(List<String> rules) {
-        this.rules = rules;
     }
 
 }
