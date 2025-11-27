@@ -102,6 +102,7 @@ public class ShipmentLifecycleController {
         offChainAdapter.connect();
         offChainAdapter.uploadFile(doc);
 
+        shipment.addDocument(doc);
         shipment.addHistoryEvent("Document uploaded: " + documentName);
 
         return doc;
