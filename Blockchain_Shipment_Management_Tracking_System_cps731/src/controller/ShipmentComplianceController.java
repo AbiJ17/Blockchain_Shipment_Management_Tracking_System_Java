@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 
-import external.BlockchainNetwork;
 import gateway.BlockchainNetworkGateway;
 import gateway.OffChainStorageAdapter;
 import model.Document;
@@ -12,17 +11,14 @@ import model.SmartContract;
 
 public class ShipmentComplianceController {
 
-    private final BlockchainNetwork blockchainNetwork;
     private final BlockchainNetworkGateway blockchainGateway;
     private final OffChainStorageAdapter offChainAdapter;
     private final SmartContract smartContract;
 
-    public ShipmentComplianceController(BlockchainNetwork blockchainNetwork,
-            BlockchainNetworkGateway blockchainGateway, 
+    public ShipmentComplianceController(BlockchainNetworkGateway blockchainGateway, 
             OffChainStorageAdapter offChainAdapter,
             SmartContract smartContract) {
 
-        this.blockchainNetwork = blockchainNetwork;
         this.blockchainGateway = blockchainGateway;
         this.offChainAdapter = offChainAdapter; 
         this.smartContract = smartContract;
@@ -59,11 +55,6 @@ public class ShipmentComplianceController {
         blockchainGateway.queryLedger("AuditTrail#" + shipment.getShipmentID());
 
         return new Report("Audit Trail - Shipment " + shipment.getShipmentID(), sb.toString());
-    }
-
-    public boolean ensureLedgerIntegrity(Shipment shipment) {
-        // For now we simply delegate to the smart contract stub
-        return smartContract.verifyLedgerIntegrity(shipment);
     }
 
     public String logDispute(Shipment shipment, String description) {

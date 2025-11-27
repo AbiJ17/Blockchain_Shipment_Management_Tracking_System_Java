@@ -56,7 +56,6 @@ public class LoginFrame extends JFrame {
 
         if (complianceController == null) { 
             complianceController = new ShipmentComplianceController(
-                    blockchainNetwork,
                     blockchainGateway,
                     offChainAdapter,
                     smartContract);
