@@ -31,13 +31,12 @@ public class PaymentServiceAdapter {
 
     /** Process payment and track the transaction ID */
     public boolean processPayment(Shipment shipment, float amount) {
-        if (!connected) return false;
-
+        if (!connected) { 
+            return false;
+        }
         paymentService.setAmount(amount);
         boolean success = paymentService.processPayment(shipment);
-
         lastTransactionID = paymentService.getTransactionID();
-
         return success;
     }
 

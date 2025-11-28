@@ -89,9 +89,7 @@ public class ShipmentLifecycleController {
     }
 
     /** Used by MainUI: create & upload a document for a shipment. */
-    public Document uploadDocument(Shipment shipment,
-            String documentName,
-            String content) {
+    public Document uploadDocument(Shipment shipment, String documentName, String content) {
         if (shipment == null) {
             return null;
         }
